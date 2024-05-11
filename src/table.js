@@ -5,17 +5,18 @@
 export function table(data, container, helper, builder) {
 
     let inst = this;
+    const elemID = "stratox-tb-comp-"+inst.getViewCount();
     if(!data.sort) data.sort = {};
 
     let out = `
-    <table cellpadding="0" cellpadding="0">
+    <table id="${elemID}" cellpadding="0" cellpadding="0">
         <thead>${thead()}</thead>
         <tbody>${tbody()}</tbody>
     </table>
     `;
 
-    this.eventOnload(() => {
-        inst.bindEvent(inst.setSelector(".sort"), "click", (e, target) => {
+    inst.done(function(a, b) {
+        inst.bindEvent(inst.setSelector("#"+elemID), "click", ".sort", function(e, target) {
             e.preventDefault();
             let name = target.dataset['name'];
             if(typeof name === "string") sort(name);
@@ -105,7 +106,7 @@ export function table(data, container, helper, builder) {
      */
     function sort(name) {
         data.sort[name] = (!data.sort[name]) ? 1 : 0;
-        if(data?.sort?.[name]) {
+        if(!data?.sort?.[name]) {
             data.feed.sort((a, b) => (b[name] ?? "").localeCompare(a[name] ?? ""));
         } else {
             data.feed.sort((a, b) => (a[name] ?? "").localeCompare(b[name] ?? ""));

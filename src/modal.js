@@ -22,11 +22,9 @@ export function modal(data, container, helper, builder)
                 if (!this.data.type) {
                     this.data.type = "message";
                 }
-
                 this.data.isOpener = (this.data.type === "opener");
                 this.data.body = document.body;
-                this.data.body.classList.add("overflow");
-
+                this.data.body.classList.add("overflow-hidden");
                 this.data.body.insertAdjacentHTML('beforeend', this.output.main());
                 this.data.modal = inst.setSelector("#"+this.config.id);
                 // Pass modal container to Stratox as the main element
@@ -44,7 +42,6 @@ export function modal(data, container, helper, builder)
                         methods.removeModal();
                     });
                 }
-
                 inst.bindEvent([document], "keyup", methods.keyup);
                 
             } else {
@@ -52,17 +49,16 @@ export function modal(data, container, helper, builder)
                 // Return template output to the script, the observer will auto update the information
                 return this.output.main();
             }
-
         },
         output: {
             main: function () {
                 return `
-                <div id="${methods.config.id}" class="modal modal-${methods.data.type} abs fixed z-50 scroll">
-                    <div class="flex justify-center items-center h-12">
-                        <div class="relative z-20 width-100 max-height-100 ${methods.data.isOpener ? 'max-w-screen-md' : 'max-w-screen-xs'}">
-                            <div class="mod-holder ${methods.data.isOpener ? '' : 'align-center'} bg-white">
+                <div id="${methods.config.id}" class="modal modal-${methods.data.type} fixed inset-0 z-50 scroller">
+                    <div class="flex justify-center items-center h-full">
+                        <div class="relative z-20 container max-h-full ${methods.data.isOpener ? 'md' : 'xs'}">
+                            <div class="mod-holder ${methods.data.isOpener ? '' : 'text-center'} bg-white">
                                 ${this.close()}
-                                <div class="card-2">
+                                <div class="card-3">
                                     <section id="modal-content" class="${methods.data.isOpener ? 'mb-30' : 'message'}">
                                         ${data.headline ? '<h2 class="headline-4 mt-0">'+data.headline+'</h2>' : ''}
                                         <p>${data.content}</p>
@@ -71,14 +67,14 @@ export function modal(data, container, helper, builder)
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-black opacity-80 abs fixed z-10"></div>
+                        <div class="bg-black opacity-80 fixed inset-0 z-10"></div>
                     </div>
                 </div>
                 `;
             },
             close: function () {
                 return `
-                <a class="btn close cancel abs top right z-20 p-15" href="#">
+                <a class="btn close cancel absolute top-0 right-0 z-20 p-15" href="#">
                     <svg class="close" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M10.243 1.757l-8.486 8.486m0-8.486l8.486 8.486" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
                 `;
@@ -126,7 +122,7 @@ export function modal(data, container, helper, builder)
         },
         removeModal: function () {
             this.data.modal[0].remove();
-            this.data.body.classList.remove("overflow");
+            this.data.body.classList.remove("overflow-hidden");
             if(typeof document?.off === "function") document.off();
 
         },
@@ -142,7 +138,7 @@ export function modal(data, container, helper, builder)
             methods.removeModal();
 
         }, keyup: function (e) {
-            if (e.which === 27 && data?.type === "opener") {
+            if (e.which === 27 && (data?.type === "opener")) {
                 e.preventDefault();
                 methods.removeModal();
             }
