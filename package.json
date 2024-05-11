@@ -1,0 +1,32 @@
+{
+  "name": "@stratox/component",
+  "version": "1.0.0",
+  "description": "Component library for Stratox Framework",
+  "main": "src/index.js",
+  "files": [
+    "src/*.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stratoxjs/tailwind.git"
+  },
+  "bugs": {
+    "url": "https://stratox.wazabii.se/issues",
+    "email": "daniel.ronkainen@wazabii.se"
+  },
+  "homepage": "https://stratox.wazabii.se/",
+  "keywords": [
+    "stratox",
+    "template",
+    "library",
+    "component",
+    "plugin",
+    "views",
+    "modern"
+  ],
+  "author": "Daniel Ronkainen",
+  "license": "MIT"
+}
